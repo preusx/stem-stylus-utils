@@ -1,0 +1,18 @@
+{
+  "name": "stem-stylus-utils",
+  "version": "0.3.17",
+  "main": "./index.styl",
+  "author": "Alex Tkachenko <preusx.dev@gmail.com>",
+  "license": "MIT",
+  "description": "Utility mixins for stylus preprocessor",
+  "keywords": [
+    "stylus",
+    "mixin",
+    "utility"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/preusx/"
+  },
+  "devDependencies": {}
+}

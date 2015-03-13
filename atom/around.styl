@@ -1,0 +1,31 @@
+@require 'is'
+
+/* ========================================================================
+ * Absolute round
+ *
+ * Module for floring, rounding and ceiling only absolute units.
+ * ======================================================================== */
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+a_round($variable)
+    if is_absolute($variable)
+        return round($variable)
+
+    return $variable
+
+
+a_floor($variable)
+    if is_absolute($variable)
+        return floor($variable)
+
+    return $variable
+
+
+a_ceil($variable)
+    if is_absolute($variable)
+        return ceil($variable)
+
+    return $variable

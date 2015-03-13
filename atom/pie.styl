@@ -1,0 +1,20 @@
+/**
+ * Variables
+ * ======================================================================== */
+
+$pie = {
+    path: ''
+    enabled: false
+}
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Pie
+ * When turned on, enables css3 pie (http://css3pie.com/) for all
+ * elements that can use it. Which makes IE look a lot nicer.
+ */
+pie()
+    behavior: url($pie.path) if $pie.enabled

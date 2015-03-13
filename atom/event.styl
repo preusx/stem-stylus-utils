@@ -1,0 +1,20 @@
+/**
+ * Variables
+ * ======================================================================== */
+
+$_event_cache = {}
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+event_add($event_name)
+    unless $_event_cache[$event_name]
+        $_event_cache[$event_name] = ()
+
+    push($_event_cache[$event_name], block)
+
+
+event_emit($event_name)
+    for $b in $_event_cache[$event_name]
+        {$b}

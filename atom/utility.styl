@@ -1,0 +1,204 @@
+/**
+ * Variables
+ * ======================================================================== */
+
+/**
+ * Custom animation timing functions, ported from bourbon
+ *
+ * https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/addons/_timing-functions.scss
+ */
+
+$ease_in_quad       = cubic-bezier(0.550,  0.085, 0.680, 0.530)
+$ease_in_cubic      = cubic-bezier(0.550,  0.055, 0.675, 0.190)
+$ease_in_quart      = cubic-bezier(0.895,  0.030, 0.685, 0.220)
+$ease_in_quint      = cubic-bezier(0.755,  0.050, 0.855, 0.060)
+$ease_in_sine       = cubic-bezier(0.470,  0.000, 0.745, 0.715)
+$ease_in_expo       = cubic-bezier(0.950,  0.050, 0.795, 0.035)
+$ease_in_circ       = cubic-bezier(0.600,  0.040, 0.980, 0.335)
+$ease_in_back       = cubic-bezier(0.600, -0.280, 0.735, 0.045)
+
+$ease_out_quad      = cubic-bezier(0.250,  0.460, 0.450, 0.940)
+$ease_out_cubic     = cubic-bezier(0.215,  0.610, 0.355, 1.000)
+$ease_out_quart     = cubic-bezier(0.165,  0.840, 0.440, 1.000)
+$ease_out_quint     = cubic-bezier(0.230,  1.000, 0.320, 1.000)
+$ease_out_sine      = cubic-bezier(0.390,  0.575, 0.565, 1.000)
+$ease_out_expo      = cubic-bezier(0.190,  1.000, 0.220, 1.000)
+$ease_out_circ      = cubic-bezier(0.075,  0.820, 0.165, 1.000)
+$ease_out_back      = cubic-bezier(0.175,  0.885, 0.320, 1.275)
+
+$ease_in_out_quad   = cubic-bezier(0.455,  0.030, 0.515, 0.955)
+$ease_in_out_cubic  = cubic-bezier(0.645,  0.045, 0.355, 1.000)
+$ease_in_out_quart  = cubic-bezier(0.770,  0.000, 0.175, 1.000)
+$ease_in_out_quint  = cubic-bezier(0.860,  0.000, 0.070, 1.000)
+$ease_in_out_sine   = cubic-bezier(0.445,  0.050, 0.550, 0.950)
+$ease_in_out_expo   = cubic-bezier(1.000,  0.000, 0.000, 1.000)
+$ease_in_out_circ   = cubic-bezier(0.785,  0.135, 0.150, 0.860)
+$ease_in_out_back   = cubic-bezier(0.680, -0.550, 0.265, 1.550)
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Mixin: Rounded
+ *
+ * Unless you are working with a ridiculously large element, this will round the
+ * corners as much as css will allow. Even in IE.
+ *
+ * ex. rounded()
+ */
+rounded()
+    border-radius 999px
+
+
+/**
+ * Extending the default hash by some new values.
+ * Resursive.
+ *
+ * @param {hash} [$default]  - Default properties
+ * @param {hash} [$by]       - New values hash
+ * @returns {hash}          - Extended hash
+ */
+extend($default, $by)
+    if type($default) != 'object'
+        return $by
+
+    if type($by) != 'object'
+        return $default
+
+    for $key, $value in $by
+        if type($value) == 'object'
+            $value = extend($default[$key], $value)
+
+        $default[$key] = $value
+
+    return $default
+
+
+no-select()
+  -webkit-touch-callout none
+  user-select none
+
+
+/**
+ * Bg
+ *
+ * Makes background (with image) declarations a little simpler. Use this with
+ * the global $path-img variable to set a base image path that you don't have to
+ * keep repeating. Also sets 'no-repeat' as the default background-repeat.
+ *
+ * ex. bg: 'test.png'
+ * ex. bg: 'other.jpg' center center repeat
+ *
+ * Source: https://github.com/jenius/axis/
+ */
+bg($path, $args...)
+  $args = unquote('no-repeat') unless $args
+
+  background url($path-img $path) $args
+
+
+circle_points($x0, $y0, $R, $points)
+    $a = (0 0)
+    $angle = (360 / $points)
+    $cangle = 0
+
+    for i in 0..$points
+        $x1 = unit($x0 + $R * cos($cangle * PI / 180), 'px')
+        $y1 = unit($y0 + $R * sin($cangle * PI / 180), 'px')
+        push($a, ($x1 $y1))
+        $cangle += $angle
+
+    return $a
+
+
+visuallyhidden()
+    border 0 !important
+    clip rect(0 0 0 0) !important
+    height 1px !important
+    margin -1px !important
+    overflow hidden !important
+    padding 0 !important
+    position absolute !important
+    width 1px !important
+
+
+/**
+ * Placeholders
+ * ======================================================================== */
+
+$full-filled
+    display block
+    height 100%
+    width 100%
+    margin 0
+    padding 0
+
+
+$visuallyhidden
+    visuallyhidden()
+
+
+$not-a-link
+    &,
+    &:hover
+        border none
+
+        font-size inherit
+        font-style inherit
+        font-stretch inherit
+        font-variant inherit
+        text-align inherit
+        text-decoration inherit
+
+        color inherit
+
+
+$clearfix
+    zoom 1
+
+    &:before
+    &:after
+        display block
+        display table
+        width 0
+        height 0
+        overflow hidden
+        visibility hidden
+
+        content ""
+
+    &:after
+        clear both
+
+
+$clean-element
+    -webkit-appearance none
+    -moz-appearance none
+    appearance none
+    display inline-block
+    box-sizing border-box
+    height auto
+    margin 0
+    padding 0
+
+    font-family inherit
+    font-weight inherit
+    font-size inherit
+    font-style inherit
+    font-stretch inherit
+    font-variant inherit
+    text-align left
+    text-decoration inherit
+    text-transform inherit
+    vertical-align middle
+    color inherit
+
+    border 0 solid transparent
+    border-radius inherit
+
+    background transparent
+
+    &:-webkit-autofill
+        background-color transparent
+

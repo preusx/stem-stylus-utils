@@ -1,0 +1,75 @@
+@require 'event'
+
+/**
+ * Variables
+ * ======================================================================== */
+
+$_media_cache = {}
+
+$media_vars = extend({
+        'sizeSmall'      : (0                      to_em(640px,  16px))
+        'sizeMedium'     : (to_em(641px,  16px)    to_em(1024px, 16px))
+        'sizeLarge'      : (to_em(1025px, 16px)    to_em(1440px, 16px))
+        'sizeXLarge'     : (to_em(1441px, 16px)    to_em(1920px, 16px))
+        'sizeXXLarge'    : (to_em(1921px, 16px)    to_em(5120px, 16px))
+
+        'templateMin'    : "only screen and (min-width: %s)"
+        'templateMax'    : "only screen and (max-width: %s)"
+        'templateMinMax' : "only screen and (min-width: %s) and (max-width: %s)"
+    }, $media_vars)
+
+
+$media_queries = extend({
+        'small'         : "only screen"
+        'small-only'    : $media_vars.templateMax % $media_vars.sizeSmall[1],
+        'medium'        : $media_vars.templateMin % $media_vars.sizeMedium[0],
+        'medium-only'   : $media_vars.templateMinMax % ($media_vars.sizeMedium[0] $media_vars.sizeMedium[1]),
+        'large'         : $media_vars.templateMin % $media_vars.sizeLarge[0],
+        'large-only'    : $media_vars.templateMinMax % ($media_vars.sizeLarge[0] $media_vars.sizeLarge[1]),
+        'xlarge'        : $media_vars.templateMin % $media_vars.sizeXLarge[0],
+        'xxlarge'       : $media_vars.templateMin % $media_vars.sizeXXLarge[0],
+
+        'desktop'       : $media_vars.templateMin % $media_vars.sizeLarge[0]
+    }, $media_queries)
+
+
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+
+media($query)
+    helper($query)
+        unless $_media_cache[$query]
+            $_media_cache[$query] = ()
+
+        push($_media_cache[$query], block)
+
+    +helper($query)
+        {selector() + ''}
+            {block}
+
+
+media-respond()
+    &_small
+        +media('small-only')
+            {block}
+
+    &_medium
+        +media('medium-only')
+            {block}
+
+    &_large
+        +media('large')
+            {block}
+
+
+media-apply-cache()
+    for $query, $blocks in $_media_cache
+        $query = $media_queries[$query] ? $media_queries[$query] : $query
+
+        @media $query
+            for $block in $blocks
+                {$block}
+

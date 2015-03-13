@@ -1,0 +1,38 @@
+/* ========================================================================
+ * is_* mixins
+ * ======================================================================== */
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+is_absolute($variable)
+    $unit = unit($variable)
+
+    if $unit in ('px')
+        return true
+    else
+        return false
+
+
+is_array()
+    if type(arguments) == 'object'
+        return type(keys(arguments)[0]) == 'object'
+    else
+        return length(arguments) > 1
+
+
+is_comma_list()
+    if list-separator(arguments) == ','
+        return true
+    else
+        return false
+
+
+is_hash()
+    return false unless is_array(arguments)
+
+    for $item in arguments
+        return true if is_array($item)
+
+    return false

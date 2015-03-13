@@ -1,0 +1,140 @@
+/**
+ * Variables
+ * ======================================================================== */
+
+$convert_font_size              ?= $base_font_size ? $base_font_size : 16px
+$convert_DPI                    ?= DPI ? DPI : 72
+$convert_character_width_ratio  ?= (3 / 5)
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Convert any CSS <length> or <percentage> value to any another.
+ *
+ * Used: Compass `convert-length` function with some changes
+ */
+to_unit($length, $to_unit, $from_context=$convert_font_size, $to_context=$from_context)
+    $from_unit = unit($length)
+
+    // Optimize for cases where `from` and `to` units are accidentally the same.
+    if $from_unit == $to_unit
+        return $length
+
+    if $from_unit == ''
+        $from_unit = 'px'
+
+    // Context values must be in px so we can determine a conversion ratio for
+    // relative units.
+    if unit($from_context) != 'px'
+        error("Paremeter $from_context must resolve to a value in pixel units.")
+    if unit($to_context) != 'px'
+        error("Parameter $to_context must resolve to a value in pixel units.")
+
+    // Convert input length to pixels
+    $length_px = $length
+
+    if $from_unit != 'px'
+        // Convert relative units using the from-context parameter.
+        if      $from_unit == 'em'
+            $length_px = $length * $from_context
+        else if $from_unit == 'rem'
+            $length_px = $length * $convert_font_size
+        else if $from_unit == '%'
+            $length_px = $length * $from_context
+        else if $from_unit == 'ex'
+            $length_px = $length * $from_context / 2
+        else if $from_unit == 'ch'
+            $length_px = $length * $from_context *\
+                         $convert_character_width_ratio
+        else if $from_unit == 'in'
+            $length_px = $length * $convert_DPI
+        else if $from_unit == 'mm'
+            $length_px = $length / 2.54 * $convert_DPI / 10
+        else if $from_unit == 'cm'
+            $length_px = $length / 2.54 * $convert_DPI
+        else if $from_unit == 'pt'
+            $length_px = $length * 96 / 72
+        else if $from_unit == 'pc'
+            $length_px = $length * $from_context
+            // Certain units can't be converted.
+        else if ($from_unit == 'vw'  ||\
+                 $from_unit == 'vh'  ||\
+                 $from_unit == 'vmin')
+            error($from_unit + " units can't be reliably converted. " +\
+                "Returning original value.")
+            return $length
+        else
+            error($from_unit + " is an unknown $length unit. " +\
+                "Returning original value.")
+            return $length
+
+        $length_px = unit($length_px, 'px')
+
+    // Convert $length in pixels to the output unit
+    $length_output = $length_px
+
+    if $to_unit != 'px'
+        // Relative units
+        if      $to_unit == 'em'
+            $length_output = $length_px / $to_context
+        else if $to_unit == 'rem'
+            $length_output = $length_px / $convert_font_size
+        else if $to_unit == '%'
+            $length_output = $length_px / $to_context * 100
+        else if $to_unit == 'ex'
+            $length_output = $length_px / $to_context * 2
+        else if $from_unit == 'ch'
+            $length_output = $length_px / $to_context /\
+                             $convert_character_width_ratio
+            // Absolute units
+        else if $to_unit == 'in'
+            $length_output = $length_px / $convert_DPI
+        else if $to_unit == 'mm'
+            $length_output = $length_px * 2.54 / $convert_DPI * 10
+        else if $to_unit == 'cm'
+            $length_output = $length_px * 2.54 / $convert_DPI
+        else if $to_unit == 'pt'
+            $length_output = $length_px * 72 / 96
+        else if $to_unit == 'pc'
+            $length_output = $length_px / $to_context
+            // Non-convertible units
+        else if ($to_unit == 'vw' ||\
+                 $to_unit == 'vh' ||\
+                 $to_unit == 'vmin')
+            error($to_unit + " units can't be reliably converted. " +\
+                "Returning original value.")
+            return $length
+        else
+            error($to_unit + " is an unknown $length unit. " +\
+                "Returning original value.")
+            return $length
+
+    return unit($length_output, $to_unit)
+
+/**
+ * Converting from different unit types to rem
+ */
+to_rem($n, $root=$convert_font_size)
+    return to_unit($n, 'rem', $root)
+
+/**
+ * Converting any unit to em
+ */
+to_px($n, $root=$convert_font_size)
+    return to_unit($n, 'px', $root)
+
+
+/**
+ * Converting any unit to em
+ */
+to_em($n, $root=$convert_font_size)
+    return to_unit($n, 'em', $root)
+
+
+/**
+ * Converting % to decimal
+ */
+to_raw_percent($value)
+    return unit(unit($value) == '%' ? $value / 100 : $value, '')
