@@ -14,5 +14,10 @@
     "type": "git",
     "url": "git://github.com/preusx/stem-stylus-utils.git"
   },
-  "devDependencies": {}
+  "scripts": {
+    "test": "node ./test-runner.js"
+  },
+  "devDependencies": {
+    "stylus-test-runner": "^0.2.0"
+  }
 }
