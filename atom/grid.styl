@@ -10,7 +10,7 @@ use('utility.js')
 
 $grid_selector      ?= 'gr'
 $grid_column_count  ?= 12
-$grid_gutter_width  ?= to_rem(20px)
+$grid_gutter_width  ?= 20px
 $grid_direction     ?= DIRECTION
 $grid_responsive    ?= true
 $grid_build         ?= false
@@ -106,9 +106,16 @@ gr-sidebar($s_width, $position=gr_direction(), $offset=0, $names=('sidebar' 'con
 
 gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
     $gutter /= 2
+    $selector = selector('&')
+    $ps = $bem_ps
+    $ms = $bem_ms
+
+    if !$selector
+        $ps = '.'
+        $ms = '.'
 
     // Modifers
-    &{$bem_ms}
+    &{$ms}
         &w
             for $i in 1..$count
                 &{$i}
@@ -120,22 +127,23 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
                     margin-left gr_size($i, $count)
 
     // Blocks
-    &-row
-        display block
-        padding-left 0
-        padding-right 0
-        margin-left -1 * $gutter
-        margin-right -1 * $gutter
+    &{$ps}
+        &row
+            display block
+            padding-left 0
+            padding-right 0
+            margin-left -1 * $gutter
+            margin-right -1 * $gutter
 
-        list-style none
+            list-style none
 
-    &-col
-        display block
-        float gr_direction()
-        min-height 1px
+        &col
+            display block
+            float gr_direction()
+            min-height 1px
 
-        padding-left $gutter
-        padding-right $gutter
+            padding-left $gutter
+            padding-right $gutter
 
 
 if $grid_build
