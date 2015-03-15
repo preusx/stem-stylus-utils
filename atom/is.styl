@@ -6,6 +6,13 @@
  * Mixins
  * ======================================================================== */
 
+is_typeof_arguments($type, $args)
+    for $item in $args
+        return false if typeof($item) != $type
+
+    return true
+
+
 is_absolute($variable)
     $unit = unit($variable)
 
@@ -36,3 +43,15 @@ is_hash()
         return true if is_array($item)
 
     return false
+
+
+is_string()
+    return is_typeof_arguments('string', arguments)
+
+
+is_ident()
+    return is_typeof_arguments('ident', arguments)
+
+
+is_function()
+    return is_typeof_arguments('function', arguments)
