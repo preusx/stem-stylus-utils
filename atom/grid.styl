@@ -110,22 +110,14 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
     // Modifers
     &{$bem_ms}
         &w
-            $unit_width = gr_percentage_width($count)
-
-            for $i in 1..$base
-                $w = $unit_width * $i
-
+            for $i in 1..$count
                 &{$i}
-                    width $w
+                    width gr_size($i, $count)
 
         &o
-            $unit_width = gr_percentage_width($count)
-
-            for $i in 1..$base
-                $w = $unit_width * $i
-
+            for $i in 1..$count
                 &{$i}
-                    margin-left $w
+                    margin-left gr_size($i, $count)
 
     // Blocks
     &-row
