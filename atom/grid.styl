@@ -1,5 +1,9 @@
 use('utility.js')
 
+@require 'convert'
+@require 'is'
+@require 'bem'
+
 /**
  * Variables
  * ======================================================================== */
@@ -37,20 +41,6 @@ gr_size($size, $base=$grid_column_count)
     return gr_percentage_width($base) * $size
 
 
-gr-delimit-prop($prop, $base, $namespace = "")
-    $unit_width = gr_percentage_width($base)
-
-    for i in 1..$base
-        &{$namespace}{i}
-            w = $unit_width * i
-
-            {$prop} w
-
-            if $grid_responsive
-                +media-respond()
-                    {$prop} w
-
-
 gr-block-columns($s_desktop, $s_medium=null, $s_small = 1,\
         $gutter=$grid_gutter_width, $g=$gutter, $s='-item')
     $s_medium = $s_desktop unless $s_medium
@@ -59,7 +49,7 @@ gr-block-columns($s_desktop, $s_medium=null, $s_small = 1,\
     @extends $clearfix
 
     if unit($g) != '%' && $g > 0
-        &__inner
+        &{$bem_es}inner
             @extends $clearfix
 
             margin-left -0.5 * $g
@@ -76,7 +66,7 @@ gr-block-columns($s_desktop, $s_medium=null, $s_small = 1,\
         if $g > 0
             if unit($g) != '%'
                 $g /= 2
-                &__inner
+                &{$bem_es}inner
                     padding-left $g
                     padding-right $g
             else
@@ -99,53 +89,65 @@ gr-block-columns($s_desktop, $s_medium=null, $s_small = 1,\
                 width gr_percentage_width($s_desktop, $percentage_gutter)
 
 
-gr-sidebar($s_width, $position=gr_direction(), $offset=0, $name='sidebar')
-    &__inner,
-    &__{$name},
-    &__content
-        position relative
+gr-sidebar($s_width, $position=gr_direction(), $offset=0, $names=('sidebar' 'content'))
+    if is_string($names)
+        $names = ($names 'content')
 
-    &__inner
-        @extends $clearfix
+    // Elements
+    &{$bem_es}
+        &inner,
+        &{$name},
+        &content
+            position relative
 
-        margin-{$position} $s_width
+        &inner
+            @extends $clearfix
 
-    &__{$name}
-        float unquote($position)
-        width $s_width
-        margin-{$position} -1 * $s_width
+            margin-{$position} $s_width
 
-    &__content
-        display inline-block
-        padding-{$position} $offset if $offset
-        width 100%
+        &{$names[0]}
+            float unquote($position)
+            width $s_width
+            margin-{$position} -1 * $s_width
+
+        &{$names[1]}
+            display inline-block
+            padding-{$position} $offset if $offset
+            width 100%
 
 
 gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
     $gutter /= 2
 
     // Modifers
-    &_w
-        gr-delimit-prop('width', $count)
+    &{$bem_ms}
+        &w
+            $unit_width = gr_percentage_width($count)
 
-    &_o
-        gr-delimit-prop('margin-left', $count)
+            for $i in 1..$base
+                $w = $unit_width * $i
+
+                &{$i}
+                    width $w
+
+        &o
+            $unit_width = gr_percentage_width($count)
+
+            for $i in 1..$base
+                $w = $unit_width * $i
+
+                &{$i}
+                    margin-left $w
 
     // Blocks
     &-row
-        &,
-        &__inner
-            @extend $clearfix
+        display block
+        padding-left 0
+        padding-right 0
+        margin-left -1 * $gutter
+        margin-right -1 * $gutter
 
-            display block
-            padding-left 0
-            padding-right 0
-
-            list-style none
-
-        &__inner
-            margin-left -1 * $gutter
-            margin-right -1 * $gutter
+        list-style none
 
     &-col
         display block
