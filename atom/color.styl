@@ -124,9 +124,6 @@ color_darken($color, $by)
     $l = to_raw_percent(lightness($color))
     $by = to_raw_percent($by)
 
-    p(($h $s $l $by))
-    p((($h - $h * ($by * $color_rate_darken[0])) ($s - $s * ($by * $color_rate_darken[1])) ($l - $l * ($by * $color_rate_darken[2]))))
-
     return rgba(hsla(\
         ($h - $h * ($by * $color_rate_darken[0])),\
         100% * ($s - $s * ($by * $color_rate_darken[1])),\
