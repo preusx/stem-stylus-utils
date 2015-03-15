@@ -76,18 +76,6 @@ gr-block-columns($s_desktop, $s_medium=null, $s_small = 1,\
                 &:nth-child({'' + $s_desktop + 'n+1'})
                     margin-left 0
 
-        if $grid_responsive
-            if $s_small != $s_desktop
-                +media('small-only')
-                    width gr_percentage_width($s_small, $percentage_gutter)
-
-            if $s_medium != $s_desktop
-                +media('medium-only')
-                    width gr_percentage_width($s_medium, $percentage_gutter)
-
-            +media('large')
-                width gr_percentage_width($s_desktop, $percentage_gutter)
-
 
 gr-sidebar($s_width, $position=gr_direction(), $offset=0, $names=('sidebar' 'content'))
     if is_string($names)
