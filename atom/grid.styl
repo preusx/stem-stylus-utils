@@ -114,22 +114,20 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
         $ps = '.'
         $ms = '.'
 
-    // Modifers
-    &{$ms}
+    // Blocks
+    &{$ps}
         &w
             for $i in 1..$count
                 &{$i}
-                    +media-respond(($bem_mps ''), true)
+                    +media-respond(($bem_ms ''), true)
                         width gr_size($i, $count)
 
         &o
             for $i in 1..$count
                 &{$i}
-                    +media-respond(($bem_mps ''), true)
+                    +media-respond(($bem_ms ''), true)
                         width gr_size($i, $count)
 
-    // Blocks
-    &{$ps}
         &row
             display block
             padding-left 0
