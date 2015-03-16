@@ -96,6 +96,8 @@ media($from, $to=0)
 
 
 media-respond($pfixes=('' ''))
+    {block}
+
     for $type in ('xs' 'sm' 'md' 'lg')
         &{$pfixes[0]}{$type}{$pfixes[1]}
             +media($type)
