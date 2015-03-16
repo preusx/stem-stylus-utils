@@ -119,6 +119,11 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
         &w
             for $i in 1..$count
                 &{$i}
+                    +cache($selector + $ps + 'grid-' + 'w')
+                        +media-respond($bem_ms + '%s', true)
+                            /{$selector}{$ps}col&
+                                float gr_direction()
+
                     +media-respond($bem_ms + '%s', true)
                         width gr_size($i, $count)
 
@@ -128,7 +133,10 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
                     +media-respond($bem_ms + '%s', true)
                         width gr_size($i, $count)
 
+
         &row
+            @extends $clearfix
+
             display block
             padding-left 0
             padding-right 0
@@ -139,7 +147,6 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
 
         &col
             display block
-            float gr_direction()
             min-height 1px
 
             padding-left $gutter
