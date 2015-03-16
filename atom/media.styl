@@ -95,12 +95,12 @@ media($from, $to=0)
         {block}
 
 
-media-respond($pfixes=('' ''), $default=true)
+media-respond($template="%s", $default=false)
     if $default
         {block}
 
     for $type in ('xs' 'sm' 'md' 'lg')
-        &{$pfixes[0]}{$type}{$pfixes[1]}
+        &{$template % unquote($type)}
             +media($type)
                 {block}
 

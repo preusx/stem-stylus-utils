@@ -119,13 +119,13 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
         &w
             for $i in 1..$count
                 &{$i}
-                    +media-respond(($bem_ms ''), true)
+                    +media-respond($bem_ms + '%s', true)
                         width gr_size($i, $count)
 
         &o
             for $i in 1..$count
                 &{$i}
-                    +media-respond(($bem_ms ''), true)
+                    +media-respond($bem_ms + '%s', true)
                         width gr_size($i, $count)
 
         &row
