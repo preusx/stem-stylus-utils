@@ -119,12 +119,14 @@ gr-build($count=$grid_column_count, $gutter=$grid_gutter_width)
         &w
             for $i in 1..$count
                 &{$i}
-                    width gr_size($i, $count)
+                    +media-respond(($bem_mps ''), true)
+                        width gr_size($i, $count)
 
         &o
             for $i in 1..$count
                 &{$i}
-                    margin-left gr_size($i, $count)
+                    +media-respond(($bem_mps ''), true)
+                        width gr_size($i, $count)
 
     // Blocks
     &{$ps}
