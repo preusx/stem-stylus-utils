@@ -96,21 +96,10 @@ media($from, $to=0)
 
 
 media-respond($pfixes=('' ''))
-    &{$pfixes[0]}xs{$pfixes[1]}
-        +media('xs')
-            {block}
-
-    &{$pfixes[0]}sm{$pfixes[1]}
-        +media('sm')
-            {block}
-
-    &{$pfixes[0]}md{$pfixes[1]}
-        +media('md')
-            {block}
-
-    &{$pfixes[0]}lg{$pfixes[1]}
-        +media('lg')
-            {block}
+    for $type in ('xs' 'sm' 'md' 'lg')
+        &{$pfixes[0]}{$type}{$pfixes[1]}
+            +media($type)
+                {block}
 
 
 media-apply-cache()
