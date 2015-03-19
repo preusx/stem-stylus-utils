@@ -24,7 +24,11 @@ gr_direction()
 
 
 gr_percentage_width($count, $gutter=0)
+    if $count < 1
+        return $count * 100% - (.01 * $count)
+
     $container_width = 100% - (unit($gutter) == '%' ? ($count - 1) * $gutter : 0)
+
     if unit($container_width % $count, '') is 0
         return ($container_width / $count)
     else
@@ -33,10 +37,7 @@ gr_percentage_width($count, $gutter=0)
 
 gr_size($size, $base=$grid_column_count)
     if $size < 1
-        $sf = math_simple_fraction($size)
-
-        $size = $sf[0]
-        $base = $sf[1]
+        return gr_percentage_width($size)
 
     return gr_percentage_width($base) * $size
 
