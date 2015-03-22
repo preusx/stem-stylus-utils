@@ -19,12 +19,12 @@ $media_templates = extend({
     }, $media_templates)
 
 $media_sizes = extend({
-        'xsmall'     : (0                              to_em($media_bp[0], 16px))
-        'small'      : (to_em($media_bp[0]+1, 16px)    to_em($media_bp[1], 16px))
-        'medium'     : (to_em($media_bp[1]+1, 16px)    to_em($media_bp[2], 16px))
-        'large'      : (to_em($media_bp[2]+1, 16px)    to_em($media_bp[3], 16px))
-        'xlarge'     : (to_em($media_bp[3]+1, 16px)    to_em($media_bp[4], 16px))
-        'xxlarge'    : (to_em($media_bp[4]+1, 16px)    0)
+        'xsmall'     : (0                            to_em($media_bp[0] - 1, 16px))
+        'small'      : (to_em($media_bp[0], 16px)    to_em($media_bp[1] - 1, 16px))
+        'medium'     : (to_em($media_bp[1], 16px)    to_em($media_bp[2] - 1, 16px))
+        'large'      : (to_em($media_bp[2], 16px)    to_em($media_bp[3] - 1, 16px))
+        'xlarge'     : (to_em($media_bp[3], 16px)    to_em($media_bp[4] - 1, 16px))
+        'xxlarge'    : (to_em($media_bp[4], 16px)    0)
     }, $media_sizes)
 
 
