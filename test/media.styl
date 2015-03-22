@@ -3,65 +3,59 @@
 // @it By name
 +media('small')
     body
-        //
+        test 1px
 
 // @expects
-@media only screen and (min-width: 640px) {
-    body {}
-}
+@media only screen and (min-width:40.0625em){body{test:1px}}
 
 
 // @it By shortname
+
 +media('sm')
     body
-        //
+        test 1px
 
 // @expects
-@media only screen and (min-width: 640px) {
-    body {}
-}
+@media only screen and (min-width:40.0625em){body{test:1px}}
 
 
 // @it Custom: from
 +media(35px)
     body
-        //
+        test 1px
 
 // @expects
 @media only screen and (min-width: 35px) {
-    body {}
+    body { test: 1px; }
 }
 
 
 // @it Custom: to
 +media(0, 35px)
     body
-        //
+        test 1px
 
 // @expects
 @media only screen and (max-width: 35px) {
-    body {}
+    body { test: 1px; }
 }
 
 
 // @it Custom: from to
 +media(25px, 35px)
     body
-        //
+        test 1px
 
 // @expects
-@media only screen and (min-width: 25px) and (max-width: 35px) {
-    body {}
-}
-
+@media only screen and (min-width:25px) and (max-width:35px){body{test:1px}}
 
 // @it Custom: query
 +media('only screen')
     body
-        //
+        test 1px
 
 // @expects
 @media only screen {
-    body {}
+    body { test: 1px; }
 }
 

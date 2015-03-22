@@ -1,27 +1,31 @@
 @require 'utility'
 @require 'is'
+@require 'convert'
 
 /**
  * Variables
  * ======================================================================== */
 
-$media_cachable = false
-$_media_cache   = {}
+$media_cachable  = false
+$_media_cache    = {}
+
+// End of the:      xs      sm      md      lg      xl
+$media_bp        = (640px   992px   1224px  1440px  1920px)
 
 $media_templates = extend({
         'min'    : "only screen and (min-width: %s)"
         'max'    : "only screen and (max-width: %s)"
         'minMax' : "only screen and (min-width: %s) and (max-width: %s)"
-    }, $media_cachable)
+    }, $media_templates)
 
 $media_sizes = extend({
-        'xsmall'     : (0        640px)
-        'small'      : (640px    992px)
-        'medium'     : (993px    1224px)
-        'large'      : (1225px   1440px)
-        'xlarge'     : (1441px   1920px)
-        'xxlarge'    : (1921px   5120px)
-    }, $media_vars)
+        'xsmall'     : (0                              to_em($media_bp[0], 16px))
+        'small'      : (to_em($media_bp[0]+1, 16px)    to_em($media_bp[1], 16px))
+        'medium'     : (to_em($media_bp[1]+1, 16px)    to_em($media_bp[2], 16px))
+        'large'      : (to_em($media_bp[2]+1, 16px)    to_em($media_bp[3], 16px))
+        'xlarge'     : (to_em($media_bp[3]+1, 16px)    to_em($media_bp[4], 16px))
+        'xxlarge'    : (to_em($media_bp[4]+1, 16px)    0)
+    }, $media_sizes)
 
 
 $media_queries = extend({
@@ -67,7 +71,7 @@ media_query($from, $to=0)
         else if $sizes[0] == 0
             $query = $media_templates.max % $sizes[1]
         else
-            $query = $media_templates.minMax % ($sizes[0] $sizes[0])
+            $query = $media_templates.minMax % ($sizes[0] $sizes[1])
 
     return $query
 
