@@ -9,56 +9,6 @@ $color_rate_lighten    ?= (0.06 0.14 1)
 $color_rate_darken     ?= (0.06 0.14 1)
 
 
-$color_base = extend({
-        'flatUI': {
-            'turquoise':     #1ABC9C
-            'greenSea':      #16A085
-            'emerald':       #2ECC71
-            'nephritis':     #27AE60
-            'peterRiver':    #3498DB
-            'belizeHole':    #2980B9
-            'amethyst':      #9B59B6
-            'wisteria':      #8E44AD
-            'wetAsphalt':    #34495E
-            'midnightBlue':  #2C3E50
-            'sunFlower':     #F1C40F
-            'orange':        #F39C12
-            'carrot':        #E67E22
-            'pumpkin':       #D35400
-            'alizarin':      #E74C3C
-            'pomegranate':   #C0392B
-            'clouds':        #ECF0F1
-            'silver':        #BDC3C7
-            'concrete':      #95A5A6
-            'asbestos':      #7F8C8D
-        }
-
-        'material': {
-            'red':           #F44336
-            'pink':          #E91E63
-            'purple':        #9C27B0
-            'deepPurple':    #673AB7
-            'indigo':        #3F51B5
-            'blue':          #2196F3
-            'lightBlue':     #03A9F4
-            'cyan':          #00BCD4
-            'teal':          #009688
-            'green':         #4CAF50
-            'lightGreen':    #8BC34A
-            'lime':          #CDDC39
-            'yellow':        #FFEB3B
-            'amber':         #FFC107
-            'orange':        #FF9800
-            'deepOrange':    #FF5722
-            'brown':         #795548
-            'grey':          #9E9E9E
-            'blueGrey':      #607D8B
-            'black':         #000000
-            'white':         #FFFFFF
-        }
-    }, $color_base)
-
-
 /**
  * Mixins
  * ======================================================================== */
@@ -137,7 +87,8 @@ color_darken($color, $by)
  * Depenfing on provided background-color makes text color dark or light.
  */
 color-depends($color_light, $color_dark, $background=@background-color)
-    if (contrast($background, #000).ratio) < 10
+    if contrast($background, $color_light).ratio > \
+            contrast($background, $color_dark).ratio
         color $color_light
     else
         color $color_dark
