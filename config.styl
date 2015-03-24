@@ -2,7 +2,7 @@
  * Variables
  * ======================================================================== */
 
-DEBUG                     ?= true
+DEBUG                     ?= false
 DPI                       ?= 72
 DIRECTION                 ?= ltr
 PI                        ?= 3.141592653589793
@@ -12,19 +12,17 @@ $path_font                ?= '../font/'
 $path_img                 ?= '../img/'
 
 
+$root_font_size           ?= 16px
+
+$base_font_size           ?= 16px
+$base_line_height_ratio   ?= 1.5
+$base_line_height         ?= floor($base_line_height_ratio * $base_font_size)
+
 $base_font_families       = {
     sans: ('Helvetica Neue' 'Helvetica Arial' sans-serif)
     serif: ('Georgia' 'Times New Roman' 'Times' serif)
     mono: ('Consolas' 'Courier New' monospace)
 }
-
-$base_font_family         ?= $base_font_families.sans
-$base_font_size           ?= 16px
-$base_line_height_ratio   ?= 1.5
-$base_line_height         ?= floor($base_line_height_ratio * $base_font_size)
-
-
-$base_body_width          ?= 960px
 
 
 $base_transition_diration ?= .15s
