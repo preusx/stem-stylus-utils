@@ -55,3 +55,17 @@ is_ident()
 
 is_function()
     return is_typeof_arguments('function', arguments)
+
+
+is_bool()
+    return is_typeof_arguments('boolean', arguments)
+
+
+is_boolean()
+    return is_typeof_arguments('boolean', arguments)
+
+
+is_color($var)
+    $type = type($var)
+
+    return $type == 'rgba' || $type == 'hsla'
