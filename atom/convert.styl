@@ -23,7 +23,7 @@ to_unit($length, $to_unit, $from_context=$convert_font_size, $to_context=$from_c
         return $length
 
     if $from_unit == ''
-        $from_unit = 'px'
+        return unit($length, $to_unit)
 
     // Context values must be in px so we can determine a conversion ratio for
     // relative units.
