@@ -1,6 +1,6 @@
 {
   "name": "stem-stylus-utils",
-  "version": "0.3.17",
+  "version": "0.3.18",
   "main": "./index.styl",
   "author": "Alex Tkachenko <preusx.dev@gmail.com>",
   "license": "MIT",
