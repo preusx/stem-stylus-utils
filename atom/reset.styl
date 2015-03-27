@@ -37,8 +37,16 @@ clean()
         text-decoration inherit
 
     fieldset,
-    img
+    img,
+    iframe
         border 0
+
+    img,
+    canvas,
+    iframe,
+    video,
+    svg
+        max-width 100%
 
     caption,
     th
@@ -63,7 +71,7 @@ clean()
 /**
  * Mixin: Normalize CSS
  *
- * Based on v3.0.1 https://github.com/necolas/normalize.css
+ * Based on v3.0.2 https://github.com/necolas/normalize.css
  */
 normalize-css()
     html
@@ -83,6 +91,7 @@ normalize-css()
     header,
     hgroup,
     main,
+    menu,
     nav,
     section,
     summary
@@ -104,7 +113,7 @@ normalize-css()
         display none
 
     a
-        background transparent
+        background-color transparent
 
         &:active,
         &:hover
@@ -165,8 +174,7 @@ normalize-css()
     kbd,
     pre,
     samp
-        font-family monospace,
-        monospace
+        font-family monospace, monospace
         font-size 1em
 
     button,
