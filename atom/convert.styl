@@ -138,3 +138,26 @@ to_em($n, $root=$convert_font_size)
  */
 to_raw_percent($value)
     return unit(unit($value) == '%' ? $value / 100 : $value, '')
+
+
+/**
+ * Converting units, strings, or functions to literal
+ */
+to_lit($some)
+    if type($some) == 'string'
+        $some = unquote($some)
+
+    return '%s' %  $some
+
+to_literal($some)
+    to_lit($some)
+
+
+/**
+ * Converting units, literals, or functions to strings
+ */
+to_str($some)
+    return '' + to_literal($some)
+
+to_string($some)
+    return to_str($some)

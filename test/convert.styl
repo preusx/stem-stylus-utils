@@ -1,0 +1,16 @@
+// @describe Convert
+
+// @it to_string, to_literal
+for $i in (1 '1' 1px 'string' lit to_literal)
+    test
+        what type($i)
+        string to_string($i), type(to_string($i))
+        lit to_literal($i), type(to_literal($i))
+
+// @expects
+test { what: 'unit';     string: '1', 'string';          lit: 1, 'literal';          }
+test { what: 'string';   string: '1', 'string';          lit: 1, 'literal';          }
+test { what: 'unit';     string: '1px', 'string';        lit: 1px, 'literal';        }
+test { what: 'string';   string: 'string', 'string';     lit: string, 'literal';     }
+test { what: 'ident';    string: 'lit', 'string';        lit: lit, 'literal';        }
+test { what: 'function'; string: 'to_literal', 'string'; lit: to_literal, 'literal'; }
