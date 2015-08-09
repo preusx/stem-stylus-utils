@@ -1,0 +1,27 @@
+// @describe At Selector
+
+// @it Simple
+
+.selector
+    color #000
+
+.button
+    color: at_selector('.selector').color
+
+// @expects
+
+.selector{color:#000}.button{color:#000}
+
+
+// @it With inheritance
+
+.selector
+    &:hover
+        color #000
+
+.button
+    color: at_selector('.selector:hover').color
+
+// @expects
+
+.selector:hover{color:#000}.button{color:#000}

@@ -1,0 +1,24 @@
+// @describe At Partial
+
+// @it Simple(padding-right from padding)
+
+.button
+    padding 10px 20px
+
+    margin-right at_partial('padding-right')
+
+// @expects
+
+.button{padding:10px 20px;margin-right:20px}
+
+
+// @it Hard(border-left-width from border)
+
+.button
+    border 10px solid #000
+
+    margin-right at_partial('border-left-width')
+
+// @expects
+
+.button{border:10px solid #000;margin-right:10px}
