@@ -9,10 +9,10 @@
 $bem_prefix        ?= ''
 $bem_prefix_state  ?= 'is'
 
-$bem_ps  ?= '-'
-$bem_es  ?= '__'
-$bem_ms  ?= '--'
-$bem_mps ?= '_'
+$bem_ps  ?= '-'                         // Bem prefix separator
+$bem_es  ?= '__'                        // Bem element separator
+$bem_ms  ?= '--'                        // Bem mod separator
+$bem_mps ?= '_'                         // Bem mod parameter separator
 
 $bem_use_shortcuts ?= false
 
@@ -37,6 +37,18 @@ bem_get_reg_exp()
         '((' + $bem_ms + ')([a-z0-9_]+)|)'
 
 
+bem_get_selector_parts()
+    $parsed = split(reg_replace(selector(), bem_get_reg_exp(),
+        '$3,$5,$8,$11'), ',');
+
+    return {
+        prefix: $parsed[0]
+        block: $parsed[1]
+        element: $parsed[2]
+        mod: $parsed[3]
+    }
+
+
 bem_get_block_selector()
     $prefix = reg_replace(selector(), bem_get_reg_exp(), '$3')
     $prefix = $prefix ? $prefix : $bem_prefix
@@ -54,7 +66,7 @@ bem_get_element_selector()
     if !$element_name
         return bem_get_block_selector()
     else
-        return bem_get_block_selector() + $bem_es
+        return bem_get_block_selector() + $bem_es + $element_name
 
 
 bem_compose($block_name, $element_name='', $modifer_name='', $p=$bem_prefix, $m=$modifer_name)
@@ -123,7 +135,7 @@ bem_m()
  */
 bem_s()
     if block is defined
-        &.{$bem_prefix_state}
+        &.{$bem_prefix_state}{$bem_ps}
             {block}
     else
         return selector('&') + '.' + $bem_prefix_state + $bem_ps

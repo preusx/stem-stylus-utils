@@ -1,0 +1,79 @@
+// @describe BEM helper
+
+// @it Block compose
+
+.{bem_compose('block', 'element', 'modifer', 'b')}
+    color #000
+
+// @expects
+
+.b-block__element--modifer{color:#000}
+
+
+// @it Getting current block and element names
+
+.{bem_compose('block', 'element', 'modifer', 'b')}
+    block bem_get_block_selector()
+    element bem_get_element_selector()
+
+.{bem_compose('block', 'element', 'modifer_sortof', 'b')}
+    block bem_get_block_selector()
+    element bem_get_element_selector()
+
+// @expects
+
+.b-block__element--modifer{block:'b-block';element:'b-block__element'}
+.b-block__element--modifer_sortof{block:'b-block';element:'b-block__element'}
+
+
+// @it Getting current selector parts
+
+.{bem_compose('block', 'element', 'modifer', 'b')}
+    $block =  bem_get_selector_parts()
+
+    {$block}
+
+.{bem_compose('block', null, 'modifer_sortof', 'b')}
+    $block =  bem_get_selector_parts()
+
+    {$block}
+
+// @expects
+
+.b-block__element--modifer{prefix:'b';block:'block';element:'element';mod:'modifer'}
+.b-block--modifer_sortof{prefix:'b';block:'block';element:'';mod:'modifer_sortof'}
+
+
+// @it Simple block mixins use
+
++bem_b('block')
+    color #000
+
+    $bem_p()
+        &placeholder
+            color #fff
+
+    +bem_m()
+        &mod
+            color #0f0
+
+    +bem_s()
+        &state
+            color #0f0
+
+    +bem_e()
+        &element
+            background-color #fff
+
+            +bem_m()
+                &mod
+                    color #0f0
+
+// @expects
+
+.block{color:#000}
+.block--mod{color:#0f0}
+.block.is-state{color:#0f0}
+.block__element{background-color:#fff}
+.block__element--mod{color:#0f0}
+
