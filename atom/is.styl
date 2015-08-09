@@ -6,7 +6,7 @@
  * Mixins
  * ======================================================================== */
 
-is_typeof_arguments($type, $args)
+is_list_typeof($type, $args)
     for $item in $args
         return false if typeof($item) != $type
 
@@ -22,50 +22,64 @@ is_absolute($variable)
         return false
 
 
-is_array()
-    if type(arguments) == 'object'
-        return type(keys(arguments)[0]) == 'object'
+is_array($variable)
+    if type($variable) == 'object'
+        return type(keys($variable)[0]) == 'object'
     else
-        return length(arguments) > 1
+        return length($variable) > 1
 
 
-is_comma_list()
-    if list-separator(arguments) == ','
+is_comma_list($variable)
+    if list-separator($variable) == ','
         return true
     else
         return false
 
 
-is_hash()
-    return false unless is_array(arguments)
-
-    for $item in arguments
-        return true if is_array($item)
+is_hash($variable)
+    if type($variable) == 'object'
+        return length(keys($variable)) > 0
 
     return false
 
+    // return false unless is_array($variable)
 
-is_string()
-    return is_typeof_arguments('string', arguments)
+    // for $item in $variable
+    //     return true if is_array($item)
 
-
-is_ident()
-    return is_typeof_arguments('ident', arguments)
-
-
-is_function()
-    return is_typeof_arguments('function', arguments)
+    // return false
 
 
-is_bool()
-    return is_typeof_arguments('boolean', arguments)
+is_singular($variable)
+    return !(is_array($variable) || is_hash($variable) \
+        || is_comma_list($variable))
 
 
-is_boolean()
-    return is_typeof_arguments('boolean', arguments)
+is_unit($variable)
+    return is_singular($variable) && type($variable) == 'unit'
 
 
-is_color($var)
-    $type = type($var)
+is_string($variable)
+    return is_singular($variable) && type($variable) == 'string'
 
-    return $type == 'rgba' || $type == 'hsla'
+
+is_ident($variable)
+    return is_singular($variable) && type($variable) == 'ident'
+
+
+is_function($variable)
+    return is_singular($variable) && type($variable) == 'function'
+
+
+is_boolean($variable)
+    return is_singular($variable) && type($variable) == 'boolean'
+
+
+is_bool($variable)
+    return is_boolean($variable)
+
+
+is_color($variable)
+    $type = type($variable)
+
+    return is_singular($variable) && ($type == 'rgba' || $type == 'hsla')
