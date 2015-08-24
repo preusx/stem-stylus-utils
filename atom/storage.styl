@@ -12,14 +12,18 @@ storage($name, $data=false, $default=false, fallback=false)
     unless $_storage_cache[$name]
         $_storage_cache[$name] = { default: {}, stack: ( {} ) }
 
-    if fallback == true
-        $last = pop($_storage_cache[$name]['stack'])
+    if fallback != 0
+        if fallback == -1
+            $_storage_cache[$name]['stack'] = ({} $_storage_cache[$name]['default'])
 
-        if length($_storage_cache[$name]['stack']) == 0
-            push($_storage_cache[$name]['stack'],
-                $_storage_cache[$name]['default'])
+        else
+            $last = pop($_storage_cache[$name]['stack'])
 
-        return $last
+            if length($_storage_cache[$name]['stack']) == 0
+                push($_storage_cache[$name]['stack'],
+                    $_storage_cache[$name]['default'])
+
+            return $last
 
     else
         $top_index = length($_storage_cache[$name]['stack']) - 1

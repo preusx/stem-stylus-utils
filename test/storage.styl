@@ -40,3 +40,40 @@ storage('data', fallback:true)
 
 // @expects
 .third{second:10px;first:10px;third:10px;}
+
+
+// @it Fallback to default
+storage('data', {first: 10px}, true)
+
+storage('data', {second: 10px})
+
+storage('data', {third: 10px}, true)
+
+storage('data', fallback:-1)
+
+.fallback
+    $data = storage('data')
+    {$data}
+
+// @expects
+.fallback{third:10px;first:10px;}
+
+
+// @it Too many fallbacks
+storage('data', {first: 10px}, true)
+
+storage('data', {second: 10px})
+
+storage('data', {third: 10px}, true)
+
+storage('data', fallback:true)
+storage('data', fallback:true)
+storage('data', fallback:true)
+storage('data', fallback:true)
+
+.fallback
+    $data = storage('data')
+    {$data}
+
+// @expects
+.fallback{third:10px;first:10px;}
