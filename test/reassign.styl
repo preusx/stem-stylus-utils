@@ -1,0 +1,25 @@
+// @describe Reassign
+
+// @it Unit, Literal, String, RGBA, Hash
+
+$hash = {hash: true}
+$variable = 6px
+
+ra($var, $some)
+    reassign($var, $some)
+
+for $i in (1px 'string' _some_leteral #000 $hash)
+    ra('$variable', $i)
+
+    body
+        if is_hash($variable)
+            {$variable}
+        else
+            variable: $variable
+
+// @expects
+body{variable:1px}
+body{variable:'string'}
+body{variable:_some_leteral}
+body{variable:#000}
+body{hash:true}
