@@ -35,7 +35,7 @@ storage($name, $data=false, $default=false, fallback=false)
             return $_storage_cache[$name]['stack'][$top_index]
 
         else
-            $data = extend(clone($_storage_cache[$name]['default']), $data)
+            $data = extend(clone($_storage_cache[$name]['default']), $data, true)
 
             if $default
                 $_storage_cache[$name]['default'] = $data
@@ -43,7 +43,7 @@ storage($name, $data=false, $default=false, fallback=false)
                 for $i in 0..$top_index
                     if $i > 0
                         $_storage_cache[$name]['stack'][$i] = extend($data,
-                                $_storage_cache[$name]['stack'][$i])
+                                $_storage_cache[$name]['stack'][$i], true)
 
             push($_storage_cache[$name]['stack'], $data)
 

@@ -90,3 +90,16 @@ storage('data', {first: 20px})
 
 // @expects
 .override{first:20px;}
+
+
+// @it Override deep
+storage('data', {first: {some:10px, tall: true}}, true)
+
+storage('data', {first: {some:20px}})
+
+.override
+    $data = storage('data').first
+    {$data}
+
+// @expects
+.override{first:20px;}
