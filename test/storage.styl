@@ -21,7 +21,7 @@ storage('data', fallback:true)
 
 // @expects
 .first{first:10px}
-.second{second:10px;first:10px}
+.second{first:10px;second:10px}
 .third{first:10px}
 
 
@@ -39,7 +39,7 @@ storage('data', fallback:true)
     {$data}
 
 // @expects
-.third{second:10px;first:10px;third:10px;}
+.third{first:10px;third:10px;second:10px}
 
 
 // @it Fallback to default
@@ -56,7 +56,7 @@ storage('data', fallback:-1)
     {$data}
 
 // @expects
-.fallback{third:10px;first:10px;}
+.fallback{first:10px;third:10px}
 
 
 // @it Too many fallbacks
@@ -76,4 +76,17 @@ storage('data', fallback:true)
     {$data}
 
 // @expects
-.fallback{third:10px;first:10px;}
+.fallback{first:10px;third:10px}
+
+
+// @it Override
+storage('data', {first: 10px}, true)
+
+storage('data', {first: 20px})
+
+.override
+    $data = storage('data')
+    {$data}
+
+// @expects
+.override{first:20px;}
