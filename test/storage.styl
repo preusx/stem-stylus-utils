@@ -1,0 +1,42 @@
+// @describe Storage
+
+// @it Simple fallback
+storage('data', {first: 10px}, true)
+
+.first
+    $data = storage('data')
+    {$data}
+
+storage('data', {second: 10px})
+
+.second
+    $data = storage('data')
+    {$data}
+
+storage('data', fallback:true)
+
+.third
+    $data = storage('data')
+    {$data}
+
+// @expects
+.first{first:10px}
+.second{second:10px;first:10px}
+.third{first:10px}
+
+
+// @it Stack update when adding default
+storage('data', {first: 10px}, true)
+
+storage('data', {second: 10px})
+
+storage('data', {third: 10px}, true)
+
+storage('data', fallback:true)
+
+.third
+    $data = storage('data')
+    {$data}
+
+// @expects
+.third{second:10px;first:10px;third:10px;}

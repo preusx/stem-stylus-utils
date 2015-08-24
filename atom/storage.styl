@@ -1,0 +1,47 @@
+/**
+ * Variables
+ * ======================================================================== */
+
+$_storage_cache = {}
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+storage($name, $data=false, $default=false, fallback=false)
+    unless $_storage_cache[$name]
+        $_storage_cache[$name] = { default: {}, stack: ( {} ) }
+
+    if fallback == true
+        $last = pop($_storage_cache[$name]['stack'])
+
+        if length($_storage_cache[$name]['stack']) == 0
+            push($_storage_cache[$name]['stack'],
+                $_storage_cache[$name]['default'])
+
+        return $last
+
+    else
+        $top_index = length($_storage_cache[$name]['stack']) - 1
+
+        if !$data
+            if $default
+                return $_storage_cache[$name]['default']
+
+            return $_storage_cache[$name]['stack'][$top_index]
+
+        else
+            $data = extend($data, $_storage_cache[$name]['default'])
+
+            if $default
+                $_storage_cache[$name]['default'] = $data
+
+                for $i in 0..$top_index
+                    if $i > 0
+                        $_storage_cache[$name]['stack'][$i] = extend(
+                            $_storage_cache[$name]['stack'][$i], $data)
+
+            push($_storage_cache[$name]['stack'], $data)
+
+
+
