@@ -8,13 +8,16 @@ $_event_cache = {}
  * Mixins
  * ======================================================================== */
 
-event_add($event_name)
+event-register($event_name, $callback)
     unless $_event_cache[$event_name]
         $_event_cache[$event_name] = ()
 
-    push($_event_cache[$event_name], block)
+    push($_event_cache[$event_name], $callback)
+
+event-add($event_name, $callback)
+    event-register($event_name, $callback)
 
 
-event_emit($event_name)
+event-emit($event_name, $data=null)
     for $b in $_event_cache[$event_name]
-        {$b}
+        $b($data)

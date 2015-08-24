@@ -1,0 +1,59 @@
+// @describe Event
+
+// @it Mixin callback
+
+$var = {part: 1}
+
+event-handler()
+    body
+        part: $var.part
+
+event-register('event-name', event-handler)
+
+$var.part = 2
+
+event-emit('event-name')
+
+
+// @expects
+body{part:2}
+
+
+// @it Anonymous callback
+
+$var = {part: 1}
+
+event-register('event-name', @(){
+    body {
+        part: $var.part
+    }
+})
+
+$var.part = 2
+
+event-emit('event-name')
+
+
+// @expects
+body{part:2}
+
+
+// @it Callback with data required callback
+
+$var = {part: 1}
+
+event-register('event-name', @($data){
+    body {
+        {$data}
+    }
+})
+
+$var.part = 2
+
+event-emit('event-name', {
+        part: $var.part
+    })
+
+
+// @expects
+body{part:2}
