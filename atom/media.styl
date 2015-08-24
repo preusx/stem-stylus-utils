@@ -39,15 +39,16 @@ $media_queries = extend({
         'large-only'    : ($media_sizes.large[0]     $media_sizes.large[1]),
         'xlarge'        : ($media_sizes.xlarge[0]    0),
         'xxlarge'       : ($media_sizes.xxlarge[0]   0)
-
     }, $media_queries)
 
 // Query aliases
-$media_queries['xs']        = $media_queries['xsmall']
-$media_queries['sm']        = $media_queries['small']
-$media_queries['md']        = $media_queries['medium']
-$media_queries['lg']        = $media_queries['large']
-$media_queries['desktop']   = $media_queries['medium']
+$media_queries = extend({
+        xs        : $media_queries.xsmall,
+        sm        : $media_queries.small,
+        md        : $media_queries.medium,
+        lg        : $media_queries.large,
+        desktop   : $media_queries.medium
+    }, $media_queries)
 
 
 
