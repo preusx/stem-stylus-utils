@@ -34,3 +34,44 @@ $ease_in_out_sine   = cubic-bezier(0.445,  0.050, 0.550, 0.950)
 $ease_in_out_expo   = cubic-bezier(1.000,  0.000, 0.000, 1.000)
 $ease_in_out_circ   = cubic-bezier(0.785,  0.135, 0.150, 0.860)
 $ease_in_out_back   = cubic-bezier(0.680, -0.550, 0.265, 1.550)
+
+
+/**
+ * Mixins
+ * ======================================================================== */
+
+visuallyhidden()
+    border 0 !important
+    clip rect(0 0 0 0) !important
+    height 1px !important
+    margin -1px !important
+    overflow hidden !important
+    padding 0 !important
+    position absolute !important
+    width 1px !important
+
+
+/**
+ * Placeholders
+ * ======================================================================== */
+
+$visuallyhidden
+    visuallyhidden()
+
+
+$clearfix
+    zoom 1
+
+    &:before
+    &:after
+        display block
+        display table
+        width 0
+        height 0
+        overflow hidden
+        visibility hidden
+
+        content ""
+
+    &:after
+        clear both
