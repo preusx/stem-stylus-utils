@@ -1,6 +1,6 @@
 // @describe Reassign
 
-// @it Unit, Literal, String, RGBA, Hash
+// @it Global variable reassign : Unit, Literal, String, RGBA, Hash
 
 $hash = {hash: true}
 $variable = 6px
@@ -23,3 +23,80 @@ body{variable:'string'}
 body{variable:_some_leteral}
 body{variable:#000}
 body{hash:true}
+
+
+// @it Nearest scope variable reassign and lookup : Unit, Literal, String, RGBA, Hash
+
+$variable = 6px
+
+ra($var, $some)
+    assign($var, $some, true)
+
+body
+    $hash = {hash: true}
+
+    for $i in (1px 'string' _some_leteral #000 $hash)
+        ra('$variable', $i)
+
+        .block
+            $v = lookup('$variable')
+
+            if is_hash($v)
+                {$v}
+            else
+                variable: $v
+
+    $v = lookup('$variable')
+    {$v}
+
+.block
+    variable lookup('$variable')
+
+// @expects
+body{hash:true}
+body .block{variable:1px}
+body .block{variable:'string'}
+body .block{variable:_some_leteral}
+body .block{variable:#000}
+body .block{hash:true}
+.block{variable:6px}
+
+
+// @it Specified paternity scope variable reassign and lookup : Unit, Literal, String, RGBA, Hash
+
+$variable = 6px
+
+ra($var, $some)
+    mx()
+        assign($var, $some, 2)
+
+    mx()
+
+body
+    $hash = {hash: true}
+
+    for $i in (1px 'string' _some_leteral #000 $hash)
+        ra('$variable', $i)
+
+        .block
+            $v = lookup('$variable')
+
+            if is_hash($v)
+                {$v}
+            else
+                variable: $v
+
+    $v = lookup('$variable')
+    {$v}
+
+.block
+    variable lookup('$variable')
+
+// @expects
+body{hash:true}
+body .block{variable:1px}
+body .block{variable:'string'}
+body .block{variable:_some_leteral}
+body .block{variable:#000}
+body .block{hash:true}
+.block{variable:6px}
