@@ -1,22 +1,22 @@
 // @describe Storage
 
-// @it Simple fallback
-storage('data', {first: 10px}, true)
+// @it Stack storage: Simple fallback
+stack_storage('data', {first: 10px}, true)
 
 .first
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
-storage('data', {second: 10px})
+stack_storage('data', {second: 10px})
 
 .second
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
-storage('data', fallback:true)
+stack_storage('data', fallback:true)
 
 .third
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
 // @expects
@@ -25,81 +25,121 @@ storage('data', fallback:true)
 .third{first:10px}
 
 
-// @it Stack update when adding default
-storage('data', {first: 10px}, true)
+// @it Stack storage: Stack update when adding default
+stack_storage('data', {first: 10px}, true)
 
-storage('data', {second: 10px})
+stack_storage('data', {second: 10px})
 
-storage('data', {third: 10px}, true)
+stack_storage('data', {third: 10px}, true)
 
-storage('data', fallback:true)
+stack_storage('data', fallback:true)
 
 .third
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
 // @expects
 .third{first:10px;third:10px;second:10px}
 
 
-// @it Fallback to default
-storage('data', {first: 10px}, true)
+// @it Stack storage: Fallback to default
+stack_storage('data', {first: 10px}, true)
 
-storage('data', {second: 10px})
+stack_storage('data', {second: 10px})
 
-storage('data', {third: 10px}, true)
+stack_storage('data', {third: 10px}, true)
 
-storage('data', fallback:-1)
+stack_storage('data', fallback:-1)
 
 .fallback
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
 // @expects
 .fallback{first:10px;third:10px}
 
 
-// @it Too many fallbacks
-storage('data', {first: 10px}, true)
+// @it Stack storage: Too many fallbacks
+stack_storage('data', {first: 10px}, true)
 
-storage('data', {second: 10px})
+stack_storage('data', {second: 10px})
 
-storage('data', {third: 10px}, true)
+stack_storage('data', {third: 10px}, true)
 
-storage('data', fallback:true)
-storage('data', fallback:true)
-storage('data', fallback:true)
-storage('data', fallback:true)
+stack_storage('data', fallback:true)
+stack_storage('data', fallback:true)
+stack_storage('data', fallback:true)
+stack_storage('data', fallback:true)
 
 .fallback
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
 // @expects
 .fallback{first:10px;third:10px}
 
 
-// @it Override
-storage('data', {first: 10px}, true)
+// @it Stack storage: Override
+stack_storage('data', {first: 10px}, true)
 
-storage('data', {first: 20px})
+stack_storage('data', {first: 20px})
 
 .override
-    $data = storage('data')
+    $data = stack_storage('data')
     {$data}
 
 // @expects
 .override{first:20px;}
 
 
-// @it Override deep
-storage('data', {first: {some:10px, tall: true}}, true)
+// @it Stack storage: Override deep
+stack_storage('data', {first: {some:10px, tall: true}}, true)
 
-storage('data', {first: {some:20px}})
+stack_storage('data', {first: {some:20px}})
 
 .override
-    $data = storage('data').first
+    $data = stack_storage('data').first
     {$data}
 
 // @expects
 .override{some:20px;tall:true}
+
+
+// @it Block storage: Simple override
+
+.block
+    block_storage('data', {first: {some:10px, tall: true}}, true)
+
+    &:hover
+        block_storage('data', {first: {some:20px}})
+
+        $data = block_storage('data').first
+        {$data}
+
+    $data = block_storage('data').first
+    {$data}
+
+
+// @expects
+.block{some:10px;tall:true}
+.block:hover{some:20px;tall:true}
+
+
+// @it Block storage: Using `lookup` to get data
+
+.block
+    block_storage('data', {first: {some:10px, tall: true}}, true)
+
+    &:hover
+        block_storage('data', {first: {some:20px}})
+
+        $data = var('data').first
+        {$data}
+
+    $data = var('data').first
+    {$data}
+
+
+// @expects
+.block{some:10px;tall:true}
+.block:hover{some:20px;tall:true}

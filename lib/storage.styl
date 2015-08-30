@@ -8,13 +8,15 @@ $_storage_cache = {}
  * Mixins
  * ======================================================================== */
 
-storage($name, $data=false, $default=false, fallback=false)
+storage($name, $data=false, $default=false, fallback=false, stack=false)
     unless $_storage_cache[$name]
         $_storage_cache[$name] = { default: {}, stack: ( {} ) }
 
     if fallback != 0
         if fallback == -1
             $_storage_cache[$name]['stack'] = ({} $_storage_cache[$name]['default'])
+
+            return $_storage_cache[$name]['default']
 
         else
             $last = pop($_storage_cache[$name]['stack'])
@@ -29,7 +31,7 @@ storage($name, $data=false, $default=false, fallback=false)
         $top_index = length($_storage_cache[$name]['stack']) - 1
 
         if !$data
-            if $default
+            if $default || !stack
                 return $_storage_cache[$name]['default']
 
             return $_storage_cache[$name]['stack'][$top_index]
@@ -40,12 +42,35 @@ storage($name, $data=false, $default=false, fallback=false)
             if $default
                 $_storage_cache[$name]['default'] = $data
 
-                for $i in 0..$top_index
-                    if $i > 0
-                        $_storage_cache[$name]['stack'][$i] = extend($data,
-                                $_storage_cache[$name]['stack'][$i], true)
+                if stack
+                    for $i in 0..$top_index
+                        if $i > 0
+                            $_storage_cache[$name]['stack'][$i] = extend($data,
+                                    $_storage_cache[$name]['stack'][$i], true)
 
-            push($_storage_cache[$name]['stack'], $data)
+
+            if stack
+                push($_storage_cache[$name]['stack'], $data)
+
+            return $data
+
+
+stack_storage($name, $data=false, $default=false, fallback=false)
+    $data = storage($name, $data, $default, fallback, stack:true)
+
+    return $data
+
+
+block_storage($name, $data=false, $default=false)
+    if !$data && !$default
+        $data = var($name)
+    else
+        $data = storage($name, $data, $default, stack:false)
+
+    if $data
+        assign($name, $data, true)
+
+    return $data
 
 
 
