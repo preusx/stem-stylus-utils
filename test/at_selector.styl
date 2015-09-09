@@ -25,3 +25,34 @@
 // @expects
 
 .selector:hover{color:#000}.button{color:#000}
+
+
+// @it Multiple
+
+.selector:hover
+    color #f0f
+
+.selector
+    &:hover
+        color #000
+
+.button
+    color: at_selector('.selector:hover').color
+
+// @expects
+
+.selector:hover{color:#f0f}.selector:hover{color:#000}.button{color:#000}
+
+
+// @it Recursion
+
+.button
+    color #000
+    color: at_selector('.button').color
+
+// @expects
+.button {color: #000;color: #000;}
+
+
+// @it [TODO]: Extend
+// @expects
