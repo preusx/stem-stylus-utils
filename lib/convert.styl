@@ -62,11 +62,11 @@ to_unit($length, $to_unit, $from_context=$convert_font_size, $to_context=$from_c
         else if ($from_unit == 'vw'  ||\
                  $from_unit == 'vh'  ||\
                  $from_unit == 'vmin')
-            error($from_unit + " units can't be reliably converted. " +\
+            warn("'" + $to_unit + "' units can't be reliably converted. " +\
                 "Returning original value.")
             return $length
         else
-            error($from_unit + " is an unknown $length unit. " +\
+            warn("'" + $to_unit + "' is an unknown $length unit. " +\
                 "Returning original value.")
             return $length
 
