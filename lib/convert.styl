@@ -1,29 +1,24 @@
 /**
- * Variables
- * ======================================================================== */
-
-
-/**
  * Mixins
  * ======================================================================== */
 
 /**
  * Converting from different unit types to rem
  */
-to_rem($n, $root=$convert_font_size)
+to_rem($n, $root=$root_font_size)
     return to_unit($n, 'rem', $root)
 
 /**
  * Converting any unit to em
  */
-to_px($n, $root=$convert_font_size)
+to_px($n, $root=$root_font_size)
     return to_unit($n, 'px', $root)
 
 
 /**
  * Converting any unit to em
  */
-to_em($n, $root=$convert_font_size)
+to_em($n, $root=$root_font_size)
     return to_unit($n, 'em', $root)
 
 
