@@ -8,69 +8,82 @@ $_storage_cache = {}
  * Mixins
  * ======================================================================== */
 
-storage($name, $data=false, $default=false, fallback=false, stack=false)
-    unless $_storage_cache[$name]
-        $_storage_cache[$name] = { default: {}, stack: ( {} ) }
+storage(name, data=false, base=false, fallback=false, stack=false, default=false)
+    unless $_storage_cache[name]
+        $_storage_cache[name] = { default: {}, base: {}, stack: ( {} ) }
 
     if fallback != 0
         if fallback == -1
-            $_storage_cache[$name]['stack'] = ({} $_storage_cache[$name]['default'])
+            $_storage_cache[name]['stack'] = ({} $_storage_cache[name]['base'])
 
-            return $_storage_cache[$name]['default']
+            return $_storage_cache[name]['base']
 
         else
-            $last = pop($_storage_cache[$name]['stack'])
+            last = pop($_storage_cache[name]['stack'])
 
-            if length($_storage_cache[$name]['stack']) == 0
-                push($_storage_cache[$name]['stack'],
-                    $_storage_cache[$name]['default'])
+            if length($_storage_cache[name]['stack']) == 0
+                push($_storage_cache[name]['stack'],
+                    $_storage_cache[name]['base'])
 
-            return $last
+            return last
 
     else
-        $top_index = length($_storage_cache[$name]['stack']) - 1
+        top_index = length($_storage_cache[name]['stack']) - 1
 
-        if !$data
-            if $default || !stack
-                return $_storage_cache[$name]['default']
+        if !data
+            if base || !stack
+                return $_storage_cache[name]['base']
 
-            return $_storage_cache[$name]['stack'][$top_index]
+            return $_storage_cache[name]['stack'][top_index]
 
         else
-            $data = extend(clone($_storage_cache[$name]['default']), $data, true)
+            if default
+                base = true
 
-            if $default
-                $_storage_cache[$name]['default'] = $data
+                $_storage_cache[name]['default'] = extend(
+                    clone($_storage_cache[name]['default']), data, true)
+
+                $_storage_cache[name]['base'] = extend(
+                    clone($_storage_cache[name]['default']),
+                    clone($_storage_cache[name]['base']),
+                    true)
+
+                data = $_storage_cache[name]['base']
+            else
+                data = extend(clone($_storage_cache[name]['base']), data, true)
+
+            if base
+                $_storage_cache[name]['base'] = data
 
                 if stack
-                    for $i in 0..$top_index
-                        if $i > 0
-                            $_storage_cache[$name]['stack'][$i] = extend($data,
-                                    $_storage_cache[$name]['stack'][$i], true)
+                    for i in 0..top_index
+                        if i > 0
+                            $_storage_cache[name]['stack'][i] = extend(data,
+                                    $_storage_cache[name]['stack'][i], true)
 
 
             if stack
-                push($_storage_cache[$name]['stack'], $data)
+                push($_storage_cache[name]['stack'], data)
 
-            return $data
-
-
-stack_storage($name, $data=false, $default=false, fallback=false)
-    $data = storage($name, $data, $default, fallback, stack:true)
-
-    return $data
+            return data
 
 
-block_storage($name, $data=false, $default=false)
-    if !$data && !$default
-        $data = var($name)
+stack_storage(name, data=false, base=false, fallback=false, default=false)
+    data = storage(name, data, base, fallback, stack:true, default:default)
+
+    return data
+
+
+block_storage(name, data=false, base=false, default=false)
+    if !data && !base
+        data = var(name)
     else
-        $data = storage($name, $data, $default, stack:false)
+        data = storage(name, data, base, stack:false, default:default)
 
-    if $data
-        assign($name, $data, true)
+    if data
+        assign(name, data, true)
 
-    return $data
+    return data
 
 
 
