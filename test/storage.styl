@@ -1,22 +1,22 @@
 // @describe Storage
 
 // @it Stack storage: Simple fallback
-stack_storage('data', {first: 10px}, true)
+stack_storage('__data', {first: 10px}, true)
 
 .first
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
-stack_storage('data', {second: 10px})
+stack_storage('__data', {second: 10px})
 
 .second
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
-stack_storage('data', fallback:true)
+stack_storage('__data', fallback:true)
 
 .third
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
 // @expects
@@ -25,34 +25,34 @@ stack_storage('data', fallback:true)
 .third{first:10px}
 
 
-// @it Stack storage: Stack update when adding default
-stack_storage('data', {first: 10px}, true)
+// @it Stack storage: Stack update when adding base
+stack_storage('__data', {first: 10px}, true)
 
-stack_storage('data', {second: 10px})
+stack_storage('__data', {second: 10px})
 
-stack_storage('data', {third: 10px}, true)
+stack_storage('__data', {third: 10px}, true)
 
-stack_storage('data', fallback:true)
+stack_storage('__data', fallback:true)
 
 .third
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
 // @expects
 .third{first:10px;third:10px;second:10px}
 
 
-// @it Stack storage: Fallback to default
-stack_storage('data', {first: 10px}, true)
+// @it Stack storage: Fallback to base
+stack_storage('__data', {first: 10px}, true)
 
-stack_storage('data', {second: 10px})
+stack_storage('__data', {second: 10px})
 
-stack_storage('data', {third: 10px}, true)
+stack_storage('__data', {third: 10px}, true)
 
-stack_storage('data', fallback:-1)
+stack_storage('__data', fallback:-1)
 
 .fallback
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
 // @expects
@@ -60,19 +60,19 @@ stack_storage('data', fallback:-1)
 
 
 // @it Stack storage: Too many fallbacks
-stack_storage('data', {first: 10px}, true)
+stack_storage('__data', {first: 10px}, true)
 
-stack_storage('data', {second: 10px})
+stack_storage('__data', {second: 10px})
 
-stack_storage('data', {third: 10px}, true)
+stack_storage('__data', {third: 10px}, true)
 
-stack_storage('data', fallback:true)
-stack_storage('data', fallback:true)
-stack_storage('data', fallback:true)
-stack_storage('data', fallback:true)
+stack_storage('__data', fallback:true)
+stack_storage('__data', fallback:true)
+stack_storage('__data', fallback:true)
+stack_storage('__data', fallback:true)
 
 .fallback
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
 // @expects
@@ -80,12 +80,12 @@ stack_storage('data', fallback:true)
 
 
 // @it Stack storage: Override
-stack_storage('data', {first: 10px}, true)
+stack_storage('__data', {first: 10px}, true)
 
-stack_storage('data', {first: 20px})
+stack_storage('__data', {first: 20px})
 
 .override
-    $data = stack_storage('data')
+    $data = stack_storage('__data')
     {$data}
 
 // @expects
@@ -93,30 +93,48 @@ stack_storage('data', {first: 20px})
 
 
 // @it Stack storage: Override deep
-stack_storage('data', {first: {some:10px, tall: true}}, true)
+stack_storage('__data', {first: {some:10px, tall: true}}, true)
 
-stack_storage('data', {first: {some:20px}})
+stack_storage('__data', {first: {some:20px}})
 
 .override
-    $data = stack_storage('data').first
+    $data = stack_storage('__data').first
     {$data}
 
 // @expects
 .override{some:20px;tall:true}
 
 
+// @it Stack storage: adding the default data after the base data
+stack_storage('__data', {first: {some:10px, tall: true}}, true)
+
+.stack
+    $data = stack_storage('__data').first
+    {$data}
+
+stack_storage('__data', {first: {some:20px, colo: true}}, default:true)
+
+.stack
+    $data = stack_storage('__data').first
+    {$data}
+
+// @expects
+.stack{some:10px;tall:true}
+.stack{some:10px;colo:true;tall:true}
+
+
 // @it Block storage: Simple override
 
 .block
-    block_storage('data', {first: {some:10px, tall: true}}, true)
+    block_storage('__data', {first: {some:10px, tall: true}}, true)
 
     &:hover
-        block_storage('data', {first: {some:20px}})
+        block_storage('__data', {first: {some:20px}})
 
-        $data = block_storage('data').first
+        $data = block_storage('__data').first
         {$data}
 
-    $data = block_storage('data').first
+    $data = block_storage('__data').first
     {$data}
 
 
@@ -128,18 +146,38 @@ stack_storage('data', {first: {some:20px}})
 // @it Block storage: Using `lookup` to get data
 
 .block
-    block_storage('data', {first: {some:10px, tall: true}}, true)
+    block_storage('__data', {first: {some:10px, tall: true}}, true)
 
     &:hover
-        block_storage('data', {first: {some:20px}})
+        block_storage('__data', {first: {some:20px}})
 
-        $data = var('data').first
+        $data = var('__data').first
         {$data}
 
-    $data = var('data').first
+    $data = var('__data').first
     {$data}
 
 
 // @expects
 .block{some:10px;tall:true}
 .block:hover{some:20px;tall:true}
+
+
+// @it Block storage: adding the default data after the base data
+
+.block
+    block_storage('__data', {first: {some:10px, tall: true}}, true)
+
+    &:hover
+        block_storage('__data', {first: {some:20px, colo: true}}, default:true)
+
+        $data = var('__data').first
+        {$data}
+
+    $data = var('__data').first
+    {$data}
+
+
+// @expects
+.block{some:10px;tall:true}
+.block:hover{some:10px;colo:true;tall:true}
