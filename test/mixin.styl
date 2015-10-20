@@ -1,6 +1,6 @@
 // @describe Selector mixin
 
-// @it Simple first level applying
+// @it `mixin()`: Simple first level applying
 
 .button
     color #fff
@@ -14,7 +14,7 @@
 .block{color:#fff}
 
 
-// @it Simple second level applying
+// @it `mixin()`: Simple second level applying
 
 .button
     color #fff
@@ -31,7 +31,7 @@
 .block__element{color:#fff;background-color:#000}
 
 
-// @it Complex selector applying
+// @it `mixin()`: Complex selector applying
 
 .button
     color #fff
@@ -56,7 +56,7 @@
 .block__element:hover{text-decoration:none}
 
 
-// @it Complex selector applying with `@extend` in it
+// @it `mixin()`: Complex selector applying with `@extend` in it
 
 .to-extend
     border-width 0
@@ -87,7 +87,7 @@
 .block__element:hover{text-decoration:none}
 
 
-// @it Complex selector applying with `@extend` in it. Inserting extend properties
+// @it `mixin()`: Complex selector applying with `@extend` in it. Inserting extend properties
 
 .to-extend
     border-width 0
@@ -117,7 +117,7 @@
 .block__element:hover{border-width:0;text-decoration:none}
 
 
-// @it [TODO] Complex selector applying with `@extend` in it. Inserting nested extend properties
+// @it `mixin()`: [TODO] Complex selector applying with `@extend` in it. Inserting nested extend properties
 
 // .to-extend
 //     border-width 0
@@ -168,7 +168,7 @@
 .block__element:hover:focus{border-width:0;color:#00f} */
 
 
-// @it Nonexistent mixin selector
+// @it `mixin()`: Nonexistent mixin selector
 
 .button
     mixin('.some-button', false)
@@ -184,7 +184,7 @@
 .button{color:#000}
 
 
-// @it Multiple rulesets
+// @it `mixin()`: Multiple rulesets
 
 .button
     background-color #000
@@ -206,3 +206,60 @@
 .block,.button,.to-extend{border-width:0}
 .button{color:#fff}
 .block{background-color:#000;color:#fff}
+
+
+// @it `@mix`: Simple mixing
+
+.button
+    background-color #000
+
+$to-extend
+    border-width 0
+
+button
+    color #fff
+
+    &:hover
+        text-decoration none
+
+.block
+    @mix
+        '.button'
+        button
+        $to-extend
+
+// @expects
+
+.button{background-color:#000}
+button{color:#fff}
+button:hover{text-decoration:none}
+.block{background-color:#000;color:#fff;border-width:0}
+
+
+// @it `@mix`: Mixing with the nested rules
+
+.button
+    background-color #000
+
+$to-extend
+    border-width 0
+
+button
+    color #fff
+
+    &:hover
+        text-decoration none
+
+.block
+    @mix true
+        '.button'
+        button
+        $to-extend
+
+// @expects
+
+.button{background-color:#000}
+button{color:#fff}
+button:hover{text-decoration:none}
+.block{background-color:#000;color:#fff;border-width:0}
+.block:hover{text-decoration:none}
