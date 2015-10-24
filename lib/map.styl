@@ -1,0 +1,19 @@
+/**
+ * Mixins
+ * ======================================================================== */
+
+map(data, function)
+    if is_list(data)
+        old_data = data
+        data = (null)
+
+        for i in old_data
+            push(data, function(i))
+
+        shift(data)
+
+    if is_hash(data)
+        for i in data
+            data[i] = function(data[i])
+
+    return data
