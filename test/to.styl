@@ -1,0 +1,47 @@
+// @describe To
+
+// @it Unit shortcuts
+
+body
+    a = 150ch
+
+    px to_px(a)
+    em to_em(a)
+    rem to_rem(a)
+
+// @expects
+body{px:1440px;em:90em;rem:90rem}
+
+
+// @it String
+
+body
+    a = (1 '2' literal 'string' to_px @() {})
+
+    for i in a
+        string to_string(i)
+        literal to_literal(i)
+
+// @expects
+body{string:'1';
+    literal:1;
+    string:'2';
+    literal:2;
+    string:'literal';
+    literal:literal;
+    string:'string';
+    literal:string;
+    string:'to_px';
+    literal:to_px;
+    string:'anonymous';
+    literal:anonymous}
+
+
+// @it Raw percent
+
+body
+    percent to_raw_percent(1.5%)
+    decimal to_raw_percent(1.5)
+
+// @expects
+body{percent:.015;decimal:1.5}

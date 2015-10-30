@@ -1,0 +1,24 @@
+{
+  "name": "stem-stylus-utils",
+  "version": "0.5.0",
+  "main": "./index.styl",
+  "author": "Alex Tkachenko <preusx.dev@gmail.com>",
+  "license": "MIT",
+  "description": "Utility mixins for stylus preprocessor",
+  "main": [
+    "index.styl"
+  ],
+  "dependencies": {
+    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.1.0"
+  },
+  "devDependencies": {
+    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.1.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

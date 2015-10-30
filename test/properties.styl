@@ -1,0 +1,218 @@
+// @describe Properties
+
+// @it Block
+body
+    block()
+    inline-block()
+    hide()
+
+// @expects
+body{display:block;
+
+    display:inline-block;
+    display:-moz-inline-stack;
+    zoom:1;
+
+    display:none}
+
+
+// @it Text
+body
+    upcase()
+    lowcase()
+    resetcase()
+    nodecorate()
+    underline()
+
+    fw: 100
+    fs: 10px
+
+    bold()
+    italic()
+    normal()
+    center()
+    justify()
+
+// @expects
+body{text-transform:uppercase;
+    text-transform:lowercase;
+    text-transform:none;
+    text-decoration:none;
+    text-decoration:underline;
+    font-weight:100;
+    font-size:10px;
+    font-weight:700;
+    font-style:italic;
+    font-weight:400;
+    font-style:normal;
+    text-align:center;
+    text-align:justify}
+
+// @it Size
+body
+    lst = (10px 20px)
+
+    size: 10px
+    size: 10px 20px
+    size: lst
+
+// @expects
+body{width:10px;
+    height:10px;
+    width:10px;
+    height:20px;
+    width:10px;
+    height:20px}
+
+
+// @it Position
+body
+    absolute: 10px
+    relative: 10px _ 11px
+    fixed 10px _ _ 10px
+
+// @expects
+body{position:absolute;
+    top:10px;
+    position:relative;
+    top:10px;
+    bottom:11px;
+    position:fixed;
+    top:10px;
+    left:10px}
+
+
+// @it Background
+body
+    bg 'logo.png'
+    bg-attachment: attachment
+    bg-color: color
+    bg-image: image
+    bg-position: position
+    bg-repeat: repeat
+    bg-size: size
+    bg-clip: clip
+
+// @expects
+body{background:url(../img/logo.png) no-repeat;
+    background-attachment:attachment;
+    background-color:color;
+    background-image:image;
+    background-position:position;
+    background-repeat:repeat;
+    background-size:size;
+    background-clip:clip}
+
+
+// @it Overflow
+body
+    text-overflow: 200px ellipsis
+
+// @expects
+body{text-overflow:type;white-space:nowrap;overflow:hidden;width:200px}
+
+
+// @it No select
+body
+    no-select()
+
+// @expects
+body{-webkit-touch-callout:none;user-select:none}
+
+
+// @it Offsets
+body
+    margin-horizontal: 10px
+    margin-h: 10px
+    margin-horizontal: 10px
+    margin-x: 10px
+    margin-horizontal: 10px
+    margin-vertical: 10px
+    margin-v: 10px
+    margin-vertical: 10px
+    margin-y: 10px
+    margin-vertical: 10px
+    padding-horizontal: 10px
+    padding-h: 10px
+    padding-horizontal: 10px
+    padding-x: 10px
+    padding-horizontal: 10px
+    padding-vertical: 10px
+    padding-v: 10px
+    padding-vertical: 10px
+    padding-y: 10px
+    padding-vertical: 10px
+
+// @expects
+body{margin-left:10px;
+    margin-right:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+    padding-bottom:10px}
+
+
+// @it Visuallyhidden
+body
+    visuallyhidden()
+
+// @expects
+body{border:0!important;
+    clip:rect(0 0 0 0)!important;
+    height:1px!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    padding:0!important;
+    position:absolute!important;
+    width:1px!important}
+
+
+// @it Clear fix
+body
+    clear fix
+    clear both
+
+// @expects
+body{zoom:1;clear:both}
+body:after,body:before{display:block;
+    display:table;
+    width:0;
+    height:0;
+    overflow:hidden;
+    visibility:hidden;
+    content:""}
+body:after{clear:both}

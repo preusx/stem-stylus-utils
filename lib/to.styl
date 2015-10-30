@@ -1,0 +1,59 @@
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Converting from different unit types to rem
+ */
+to_rem(num, root=Base.font-size)
+    return to_unit(num, 'rem', root)
+
+/**
+ * Converting any unit to em
+ */
+to_px(num, root=Base.font-size)
+    return to_unit(num, 'px', root)
+
+
+/**
+ * Converting any unit to em
+ */
+to_em(num, root=Base.font-size)
+    return to_unit(num, 'em', root)
+
+
+/**
+ * Converting % to decimal
+ */
+to_raw_percent(value)
+    return unit(unit(value) == '%' ? value / 100 : value, '')
+
+
+/**
+ * Converting decimal to %
+ */
+to_percent(value)
+    return unit(100 * to_raw_percent(value), '%')
+
+
+/**
+ * Converting units, strings, or functions to literal
+ */
+to_lit(some)
+    if type(some) == 'string'
+        some = unquote(some)
+
+    return '%s' %  some
+
+to_literal(some)
+    to_lit(some)
+
+
+/**
+ * Converting units, literals, or functions to strings
+ */
+to_str(some)
+    return '' + to_literal(some)
+
+to_string(some)
+    return to_str(some)

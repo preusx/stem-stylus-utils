@@ -5,7 +5,10 @@ var testRunnerConfig = {
       stylus.include(__dirname + '../lib');
       stylus.include(__dirname + '../');
     },
-    import: '../index'
+    import: [
+      '../bower_components/stem-stylus-extensions',
+      '../index',
+    ],
   }
 }
 

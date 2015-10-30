@@ -2,14 +2,18 @@
  * Variables
  * ======================================================================== */
 
-DEBUG                     ?= false
-DPI                       ?= 72
-DIRECTION                 ?= ltr
-PI                        ?= 3.141592653589793
+DEBUG           ?= false
+DPI             ?= 72
+DIRECTION       ?= ltr
+PI              ?= 3.141592653589793
 
+ie              ?= true
 
-$path_font                ?= '../font/'
-$path_img                 ?= '../img/'
+Path            = extend({
+        font: '../font/'
+        img:  '../img/'
+    }, Path)
 
-
-$root_font_size           ?= 16px
+Base            = extend({
+        font-size: 16px
+    }, Base)

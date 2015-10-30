@@ -2,17 +2,69 @@
  * Mixins
  * ======================================================================== */
 
-clean()
-    body,
-    h1, h2, h3, h4, h5, h6,
-    p, blockquote, pre,
-    dl, dd, ol, ul,
-    form, fieldset, legend,
-    figure,
-    table, th, td, caption,
-    hr
-        margin  0
+/*
+ * Global border-box mixin best-practice
+ */
+border-box()
+    html
+        box-sizing border-box
+
+    *
+    *:before
+    *:after
+        box-sizing inherit
+
+    img
+        box-sizing content-box
+
+
+/**
+ * RESET
+ * Base reset (recommended)
+ */
+reset()
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, font, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    dl, dt, dd, ol, ul, li, input, textarea,
+    fieldset, form, label, legend, button,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary
+        margin 0
         padding 0
+        border 0
+        outline 0
+        font-weight inherit
+        font-style inherit
+        font-size 100%
+        font-family inherit
+        vertical-align baseline
+
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary
+        display block
+
+    ol, ul
+        list-style none
+
+    table
+        border-collapse separate
+        border-spacing 0
+        vertical-align middle
+
+    caption, th, td
+        text-align left
+        font-weight normal
+        vertical-align middle
+
+    blockquote, q
+        quotes "&#8220;" "&#8221;"
+
+    a img
+        border none
 
     abbr[title]
     dfn[title]
@@ -52,14 +104,6 @@ clean()
     th
         text-align left
 
-    /**
-     * Box sizing fix.
-     */
-    *,
-    *:before,
-    *:after
-        box-sizing border-box
-
     html,
     body
         -webkit-font-smoothing antialiased
@@ -72,6 +116,7 @@ clean()
  * Mixin: Normalize CSS
  *
  * Based on v3.0.2 https://github.com/necolas/normalize.css
+ * MIT License
  */
 normalize-css()
     html
@@ -253,3 +298,26 @@ normalize-css()
     td,
     th
         padding 0
+
+
+/**
+ * Reset browsers new fields features
+ * (borders on required etc.)
+ */
+fields-reset()
+    ::valid
+    ::invalid,
+    ::required,
+    ::optional,
+    ::in-range,
+    ::out-of-range
+        background: none
+        border: 0
+        box-shadow: none
+
+    ::-moz-focus-inner
+        border:0
+
+    ::-ms-clear,
+    ::-ms-reveal
+        display: none

@@ -14,6 +14,6 @@ map(data, function)
 
     if is_hash(data)
         for i in data
-            data[i] = function(data[i])
+            data[i] = function(data[i], i)
 
     return data

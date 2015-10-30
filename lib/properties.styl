@@ -1,0 +1,275 @@
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Display
+ */
+
+block()
+    display block
+
+inline-block()
+    display inline-block
+    display -moz-inline-stack
+
+    if ie
+        zoom 1
+        *display inline
+
+hide()
+    display none
+
+
+/*
+ * Text decoration mixins
+ */
+upcase()
+    text-transform uppercase
+
+lowcase()
+    text-transform lowercase
+
+resetcase()
+    text-transform none
+
+nodecorate()
+    text-decoration none
+
+underline()
+    text-decoration underline
+
+
+/*
+ * Font style mixins and simplifiers
+ *
+ * fw: 800
+ * fs: 2em
+ */
+fw(value)
+    font-weight value
+
+fs(value)
+    font-size value
+
+bold()
+    font-weight bold
+
+italic()
+    font-style italic
+
+normal()
+    font-weight normal
+    font-style normal
+
+
+/*
+ * Text align shorthands
+ */
+center()
+    text-align: center
+
+justify()
+    text-align: justify
+
+
+/*
+ * Size mixin
+ *
+ * size: 20px 10px => width: 20px; height: 10px
+ */
+size(width, height=width)
+    if is_list(width)
+        width width[0]
+        height width[1]
+    else
+        width width
+        height height
+
+
+/*
+ * Position helpers
+ */
+-pos(type, args)
+    position: unquote(type)
+
+    positions = ('top' 'right' 'bottom' 'left')
+
+    for i in 0..3
+        if args[i] != null && args[i] != '_'
+            {positions[i]}: args[i]
+
+
+absolute()
+    -pos('absolute', arguments)
+
+
+relative()
+    -pos('relative', arguments)
+
+
+fixed()
+    -pos('fixed', arguments)
+
+
+static()
+    -pos('static', arguments)
+
+
+/*
+ * Background mixins
+ *
+ * bg: 'logo.png' (with specified Path.img in 'settings')
+ * bg: '../img/logo.png' 100px 50px
+ */
+bg(path, args...)
+    args = unquote('no-repeat') unless args
+    path = Path.img + path
+    background url(path) args
+
+
+bg-attachment()
+    background-attachment arguments
+
+
+bg-color()
+    background-color arguments
+
+
+bg-image()
+    background-image arguments
+
+
+bg-position()
+    background-position arguments
+
+
+bg-repeat()
+    background-repeat arguments
+
+
+bg-size()
+    background-size arguments
+
+
+bg-clip()
+    background-clip arguments
+
+
+/*
+ * Make single text line overflow
+ *
+ * text-overflow: 200 ellipsis
+ */
+text-overflow(width, type='ellipsis')
+    text-overflow unquote('type')
+    white-space nowrap
+    overflow hidden
+    width width
+
+
+/*
+ * Disallow user to select element
+ * e.g. no-select()
+ */
+no-select()
+    -webkit-touch-callout none
+    user-select none
+
+
+/**
+ * Margin and padding shortcuts
+ */
+margin-horizontal(left, right=left)
+    margin-left left
+    margin-right right
+
+margin-h(left, right=left)
+    margin-horizontal(left, right)
+
+margin-x(left, right=left)
+    margin-horizontal(left, right)
+
+
+margin-vertical(top, bottom=top)
+    margin-top top
+    margin-bottom bottom
+
+margin-v(top, bottom=top)
+    margin-vertical(top, bottom)
+
+margin-y(top, bottom=top)
+    margin-vertical(top, bottom)
+
+
+padding-horizontal(left, right=left)
+    padding-left left
+    padding-right right
+
+padding-h(left, right=left)
+    padding-horizontal(left, right)
+
+padding-x(left, right=left)
+    padding-horizontal(left, right)
+
+
+padding-vertical(top, bottom=top)
+    padding-top top
+    padding-bottom bottom
+
+padding-v(top, bottom=top)
+    padding-vertical(top, bottom)
+
+padding-y(top, bottom=top)
+    padding-vertical(top, bottom)
+
+
+/**
+ * Hide the element
+ */
+visuallyhidden()
+    border 0 !important
+    clip rect(0 0 0 0) !important
+    height 1px !important
+    margin -1px !important
+    overflow hidden !important
+    padding 0 !important
+    position absolute !important
+    width 1px !important
+
+
+/**
+ * Clear fix
+ */
+clear(type)
+    if type == 'fix'
+        zoom 1
+
+        &:before
+        &:after
+            display block
+            display table
+            width 0
+            height 0
+            overflow hidden
+            visibility hidden
+
+            content ""
+
+        &:after
+            clear both
+    else
+        clear type
+
+
+
+/**
+ * Placeholders
+ * ======================================================================== */
+
+$visuallyhidden
+    visuallyhidden()
+
+
+$clearfix
+    clear fix

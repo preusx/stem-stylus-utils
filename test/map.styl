@@ -1,0 +1,26 @@
+// @describe Map
+
+// @it List
+
+a = map(('one' 'two' 'three'), @(item) {
+        return item + '-stuff'
+    })
+
+body
+    some a
+
+// @expects
+body{some:'one-stuff' 'two-stuff' 'three-stuff'}
+
+
+// @it Hash
+
+a = map({'one': 1, 'two': 2, 'three': 3}, @(value, key) {
+        return key + ' is ' + value
+    })
+
+body
+    {a}
+
+// @expects
+body{one:'one is 1';two:'two is 2';three:'three is 3'}
