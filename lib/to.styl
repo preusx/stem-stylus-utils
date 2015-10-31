@@ -3,10 +3,19 @@
  * ======================================================================== */
 
 /**
+ * Adding the default base font size to the javascript `to_unit` function.
+ */
+js__to_unit = to_unit
+to_unit(num, unit, root=Base.font-size)
+    js__to_unit(num, unit, root)
+
+
+/**
  * Converting from different unit types to rem
  */
 to_rem(num, root=Base.font-size)
     return to_unit(num, 'rem', root)
+
 
 /**
  * Converting any unit to em

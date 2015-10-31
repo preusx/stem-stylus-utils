@@ -1,5 +1,17 @@
 // @describe To
 
+// @it JS `to_unit`
+
+body
+    a = 150ch
+
+    px js__to_unit(a, px)
+    px to_unit(a, px)
+
+// @expects
+body{px:1440px;px:1440px}
+
+
 // @it Unit shortcuts
 
 body
