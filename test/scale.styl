@@ -11,6 +11,17 @@ body
 body{val:2,2,true}
 
 
+// @it Geometric progression ::: reverse
+a = scale_geometric-progression(.5, 3, 2)
+b = scale_geometric-progression_reverse(.5, a, 2)
+
+body
+    val: a, b, b == 3
+
+// @expects
+body{val:2,3,true}
+
+
 // @it Arithmetic progression
 a = scale_arithmetic-progression(.5, 3, 2)
 b = scale_arithmetic-progression(.5, 3)
@@ -22,6 +33,17 @@ body
 body{val:4.5, 1.5}
 
 
+// @it Arithmetic progression ::: reverse
+a = scale_arithmetic-progression(.5, 3, 2)
+b = scale_arithmetic-progression_reverse(.5, a, 2)
+
+body
+    val: a, b, b == 3
+
+// @expects
+body{val:4.5,3,true}
+
+
 // @it Exponential growth
 a = scale_exponential-growth(.5, 3, 2)
 
@@ -30,3 +52,14 @@ body
 
 // @expects
 body{val:13.5}
+
+
+// @it Exponential growth ::: reverse
+a = scale_exponential-growth(.5, 3, 2)
+b = scale_exponential-growth_reverse(.5, a, 2)
+
+body
+    val: a, b, b == 3
+
+// @expects
+body{val:13.5,3,true}
