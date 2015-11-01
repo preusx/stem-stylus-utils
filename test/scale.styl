@@ -1,0 +1,32 @@
+// @describe Scale
+
+// @it Geometric progression
+a = scale_geometric-progression(.5, 3, 2)
+b = scale_modular(.5, 3, 2)
+
+body
+    val: a, b, a == b
+
+// @expects
+body{val:2,2,true}
+
+
+// @it Arithmetic progression
+a = scale_arithmetic-progression(.5, 3, 2)
+b = scale_arithmetic-progression(.5, 3)
+
+body
+    val: a, b
+
+// @expects
+body{val:4.5, 1.5}
+
+
+// @it Exponential growth
+a = scale_exponential-growth(.5, 3, 2)
+
+body
+    val: a
+
+// @expects
+body{val:13.5}

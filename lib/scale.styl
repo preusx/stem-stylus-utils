@@ -1,0 +1,16 @@
+/**
+ * Mixins
+ * ======================================================================== */
+
+scale_geometric-progression(base, value, rate)
+    return base * (rate ** (value - 1))
+
+scale_modular = scale_geometric-progression
+
+
+scale_arithmetic-progression(base, value, d=base)
+    return base + (d * (value - 1))
+
+
+scale_exponential-growth(base, value, rate)
+    return base * ((rate + 1) ** value)
