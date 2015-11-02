@@ -33,3 +33,16 @@ scale_exponential-growth_reverse(base, value, rate, callback=null, cb=callback)
         cb = round
 
     return cb(math(value / base, 'log') / math(rate + 1, 'log'))
+
+
+scale_expotential(base, value, rate)
+    return base * math(rate * value, 'exp')
+
+scale_expotential_reverse(base, value, rate)
+    exp = math(1, 'exp')
+
+    return math(value / base, 'log') / math(exp, 'log') / rate
+
+
+scale_qubic(a, b, c, d, x)
+    return a * (x ** 3) + b * (x ** 2) + c * x + d
